@@ -27,7 +27,7 @@
 (defn- chan-throttler* [rate-ms bucket-size]
   (let [sleep-time (round (max (/ rate-ms) min-sleep-time))
         token-value (round (* sleep-time rate-ms))   ; how many messages to pipe per token
-        bucket (chan (dropping-buffer bucket-size))] ; we model the bucket with a buffered channel
+        bucket (chan (buffer bucket-size))] ; we model the bucket with a buffered channel
 
     ;; The bucket filler thread. Puts a token in the bucket every
     ;; sleep-time seconds. If the bucket is full the token is dropped
